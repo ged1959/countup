@@ -1,0 +1,110 @@
+<!-- セキュリティ上の問題を指摘され、関係者は承知の部分を削除 -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<title>クロスドメイン突破のCountUpボタン</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="jquery.xdomainajax.js"> </script>
+
+	<script>
+	// DBの値表示
+	function getNum() {
+		url = '';
+		$.get(url, function(data){
+			$('#text').html(data.responseText);
+		});
+	};
+
+	// count_up
+	function putPlusOne() {
+
+		url = '';
+		$.get(url, function(data){
+			print=$(data.responseText).text();
+			pr=print;
+			pr=pr.substr(2);
+			print=Number(pr);
+			print=parseInt(print);
+			print=print+1;
+			console.log(print);
+			document.getElementById('count').innerHTML=print;
+
+			url = ''+print;
+			$.get(url, function(data){
+				$('#text').html(data.responseText);
+			});
+
+		});
+	};
+
+	// reset
+	function reset() {
+
+		url = '';
+		$.get(url, function(data){
+			document.getElementById('count').innerHTML=0;
+			$('#text').html(data.responseText);
+		});
+
+	};
+
+</script>
+<style type="text/css">
+	body {
+		width: 100%;
+	}
+	p {
+		text-align: center;
+		font-size: 1.4em;
+		margin-top: -30px;
+	}
+	#count {
+		background-color: grey;
+		color: white;
+		width: 70%;
+		margin: 0 auto;
+		font-size: 5em;
+		text-align: center;
+	}
+	#IMG_button {
+		width: 20%;
+		margin: 10px auto;
+	}
+	#IMG_button img {
+		width: 100%;
+		margin: 10px auto;
+	}
+	#reset {
+		width: 10%;
+		margin: 10px auto 0;
+	}
+	#reset img {
+		width: 100%;
+		margin: 10px auto;
+	}
+	input {
+		display: block;
+		margin: 0 auto;
+	}
+	#text {
+		background-color: grey;
+		color: white;
+		width: 80%;
+		margin: 40px auto;
+		font-size: 1.2em;
+		text-align: center;
+	}
+</style>
+</head>
+
+<body>
+<div id="count">悶絶表示</div><br>
+<div id="IMG_button"><img src="http://www.ne.jp/asahi/dara-j/web/news_071114/images/aqua_button.png" onclick="putPlusOne()"></div>
+<div id="setumei"><p>Hit me!!</p></div>
+<div id="reset"><img src="http://us.123rf.com/450wm/sarahdesign/sarahdesign1410/sarahdesign141000880/32210955-リセット-ボタン.jpg" onclick="reset()"></div>
+<hr>
+<input type="button" value="ServerData" onclick="getNum();">
+<div id="text"></div>
+</body>
+</html>
